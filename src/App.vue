@@ -2,13 +2,14 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <p>{{ a }}</p>
+    <p>localTime: {{ localTime }}</p>
+    <p>utcTime: {{ utcTime }}</p>
+    <p>timezoneOffset: {{ timezoneOffset }}</p>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import dayjs from "dayjs"
 
 export default {
   name: 'App',
@@ -17,12 +18,17 @@ export default {
   },
   data(){
     return {
-      a: ""
+      localTime: "",
+      utcTime: '2021-01-01T08:00:00',
+      timezoneOffset: "",
+
     }
   },
   mounted(){
-    console.log(dayjs("2022-3-23 07:00").tz(dayjs.tz.guess()).format('YYYY-MM-DD HH:mm:ss'), dayjs.tz.guess())
-    this.a = this.$dayjs().format("YY||DD||MM")
+    // console.log(dayjs("2022-3-23 07:00").tz(dayjs.tz.guess()).format('YYYY-MM-DD HH:mm:ss'), dayjs.tz.guess())
+    this.localTime = this.$dayjs().format("YY-MM-DD")
+    this.timezoneOffset = this.$dayjs().utcOffset()
+    this.localTime = this.$dayjs(this.utcTime).utc().format("YY-MM-DD/HH:mm:ss")
   }
 }
 </script>
